@@ -1,0 +1,237 @@
+{% extends "base.html" %}
+{% block title %}{{ title }}{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="static/css/auth.css">
+{% endblock %}
+
+{% block content %}
+{{ super() }}
+    	<div class="navigation-wrap bg-light start-header start-style">
+		<div class="container">
+			<div class="row">
+				<div class="col-12">
+					<nav class="navbar navbar-expand-md navbar-light">
+
+						<h3><a class="navbar-brand" href="#" target="_blank"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-box-seam" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5l2.404.961L10.404 2l-2.218-.887zm3.564 1.426L5.596 5 8 5.961 14.154 3.5l-2.404-.961zm3.25 1.7l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z"/>
+</svg> Strike. Дневник</h3></a>
+
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav ml-auto py-4 py-md-0">
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
+									<a class="nav-link  font-weight-bold dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Помощь</a>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" href="#">Для учеников</a>
+										<a class="dropdown-item" href="#">Для учителей</a>
+									</div>
+								</li>
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4 active">
+									<a class="nav-link  font-weight-bold dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Возможности</a>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" href="#">Для учеников</a>
+										<a class="dropdown-item" href="#">Для учителей</a>
+									</div>
+                                </li>
+								<li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+									<a class="nav-link  font-weight-bold dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Язык</a>
+									<div class="dropdown-menu">
+										<a class="dropdown-item" href="#">UZ</a>
+										<a class="dropdown-item" href="#">RU</a>
+									</div>
+								</li>
+                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+									<a class="nav-link font-weight-bold" href="#">Войти</a>
+								</li>
+                                <li class="nav-item pl-4 pl-md-0 ml-0 ml-md-4">
+									<a class="nav-link font-weight-bold" href="#">Подключиться</a>
+								</li>
+							</ul>
+						</div>
+
+					</nav>
+				</div>
+			</div>
+		</div>
+	</div>
+    <div class="container">
+	<div class="container">
+			<div class="row full-height justify-content-center">
+				<div class="col-12 text-center">
+					<div class="text-center">
+                        <div class="container">
+                            <br>
+                            <br>
+                            <img width="250" height="250" src="https://www.flaticon.com/svg/static/icons/svg/3785/3785993.svg" alt="">
+                            {% if current_user.statuse == "Teacher" %}
+                            <h4 class="text-dark">Добавление ученик/класса</h4>
+                            {% elif current_user.statuse == "Director" %}
+                            <h4 class="text-dark">Добавление ученика/класса/школы</h4>
+                            {% elif current_user.statuse == "Redactor" %}
+                            <h4 class="text-dark">Добавление ученика/класса/школы</h4>
+                            {% elif current_user.statuse == "Admin" %}
+                            <h4 class="text-dark">Добавление ученика/класса/школы/прав</h4>
+                            {% endif %}
+                            <a href="{{ url_for('add_shool') }}" class="btn mt-4">Школы</a>
+                            <a href="{{ url_for('add_shool') }}" class="btn mt-4">Классы</a>
+                            <br>
+                            <br>
+			          	<input class="checkbox" type="checkbox" id="reg-log" name="reg-log"/>
+			          	<label for="reg-log"></label>
+						<div class="card-3d-wrap mx-auto">
+							<div class="card-3d-wrapper">
+								<div class="card-front">
+									<div class="center-wrap">
+										<div class="section text-center">
+                                            <br>
+                                            <br>
+                                            <form action="/add_user" method="post">
+                                                <br>
+                                                <br>
+                                                <br>
+                                                {% for cat, msg in get_flashed_messages(True) %}
+                                                 <div class="alert {{ cat }}" role="alert">
+                                                    <img width="40" height="40" src="https://www.flaticon.com/svg/static/icons/svg/3741/3741190.svg" alt="">
+                                                    <span class="h5">{{ msg }}</span>
+                                                 </div>
+                                                {% endfor %}
+                                                <div class="form-group">
+                                                    <input type="text" name="username" class="form-style" placeholder="Логин" id="logname" autocomplete="off">
+                                                    <i class="input-icon uil uil-user"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input type="text" name="password" class="form-style" placeholder="Пароль" id="logpass" autocomplete="off">
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input type="text" name="name" class="form-style" placeholder="Фамилия" id="logpass" autocomplete="off">
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input type="text" name="subname" class="form-style" placeholder="Имя" id="logpass" autocomplete="off">
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input type="text" name="shool" class="form-style" placeholder="Школа" id="logpass" autocomplete="off">
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input type="text" name="numclass" class="form-style" placeholder="Номер Класса" id="logpass" autocomplete="off">
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <input type="text" name="bclass" class="form-style" placeholder="Буква Класса" id="logpass" autocomplete="off">
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                </div>
+                                                <div class="form-group mt-2">
+                                                    <select class="form-style" id="exampleFormControlSelect1" name="statuses">
+                                                        {% if current_user.statuse == "Learner" %}
+                                                        <option>Learner</option>
+                                                          <option>Teacher</option>
+                                                          <option>Redactor</option>
+                                                        {% elif current_user.statuse == "Director" %}
+                                                        <option>Learner</option>
+                                                          <option>Teacher</option>
+                                                          <option>Redactor</option>
+                                                        {% elif current_user.statuse == "Redactor" %}
+                                                        <option>Learner</option>
+                                                          <option>Teacher</option>
+                                                          <option>Redactor</option>
+                                                        {% elif current_user.statuse == "Admin" %}
+                                                        <option>Learner</option>
+                                                          <option>Teacher</option>
+                                                          <option>Redactor</option>
+                                                        {% endif %}
+
+                                                    </select>
+                                                    <i class="input-icon uil uil-lock-alt"></i>
+                                                  </div>
+											    <input type="submit" value="Добавить" class="btn mt-4"></input>
+                                            </form>
+				      					</div>
+			      					</div>
+			      				</div>
+								<div class="card-back">
+									<div class="center-wrap">
+										<div class="section text-center">\
+											 <p class="text-warning">Нашли ошибку?</p>
+											 <p class="text-warning">Пишите в тех.поддержку - @strikednevnik</p>
+				      					</div>
+			      					</div>
+			      				</div>
+			      			</div>
+			      		</div>
+			      	</div>
+                  </div>
+		      	</div>
+	      	</div>
+	    </div>
+	</div>
+    <br>
+    <br>
+    <br>
+        	<div class="section mt-5">
+				<div class="container">
+					<div class="row">
+						<div class="col-12">
+                            <br>
+                            <br>
+                            <br>
+                            <br>
+							<div id="switch">
+								<div id="circle"></div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <div class="section padding-top-bottom over-hide background-dark z-bigger-2">
+    <div class="container">
+
+    <div class="row">
+      <div class="col-md-3">
+        <a href="https://vk.com/thestrikem" class="hover-target">
+          <h1 class="text-muted">StrikeCode Studio</h1>
+        </a>
+          <br>
+        <p class="text-muted h4">Все права защищены. StrikeCode Studio© 2020</p>
+
+      </div>
+      <div class="col-md-6">
+          <br>
+          <h4 class="text-center text-muted">Email:</h4>
+          <p class="text-light">info@strikednevnik.com</p>
+          <br>
+          <h4 class="text-center text-muted">Telegram-Bot:</h4>
+          <p class="text-light">@strikednevnik</p>
+          <br>
+          <h4 class="text-center text-muted">Phone:</h4>
+          <p class="text-light">+998909217702</p>
+          <br>
+      </div>
+        <div class="col-md-3">
+            <br>
+            <h4 class="text-center"><a href="" class="hover-target">API</a></h4>
+            <h4 class="text-center"><a href="" class="hover-target">Пользовательское соглашение</a></h4>
+        </div>
+    </div>
+  </div>
+
+
+<div class="scroll-to-top hover-target"></div>
+
+<div class='cursor' id="cursor"></div>
+<div class='cursor2' id="cursor2"></div>
+<div class='cursor3' id="cursor3"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://codepen.io/ig_design/pen/omQXoQ.js"></script>
+{% endblock %}
